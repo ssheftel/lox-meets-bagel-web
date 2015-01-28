@@ -26,6 +26,11 @@ var config = {
     port: '8000'
   },
 
+  proxy: {
+    route: '/api/v1.0',
+    url: 'http://localhost:5000/api/v1.0'
+  },
+
   weinre: {
     httpPort:     8001,
     boundHost:    'localhost',
@@ -107,7 +112,16 @@ gulp.task('connect', function() {
       root: config.dest,
       host: config.server.host,
       port: config.server.port,
-      livereload: true
+      livereload: true,
+      middleware: function(connect, o) {
+        return [ (function() {
+          var url = require('url');
+          var proxy = require('proxy-middleware');
+          var options = url.parse(config.proxy.url);
+          options.route = config.proxy.route;
+          return proxy(options);
+        })() ];
+      }
     });
   } else {
     throw new Error('Connect is not configured');
