@@ -6,6 +6,7 @@
 
 var config = {
   dest: 'www',
+  flask_dest: '../lox-meets-bagel-service/app/static',
   cordova: true,
   minify_images: true,
   
@@ -74,7 +75,9 @@ var gulp           = require('gulp'),
     ngFilesort     = require('gulp-angular-filesort'),
     streamqueue    = require('streamqueue'),
     rename         = require('gulp-rename'),
-    path           = require('path');
+    path           = require('path'),
+    coffee         = require('gulp-coffee'),
+    gutil          = require('gulp-util');
 
 
 /*================================================
@@ -168,6 +171,15 @@ gulp.task('fonts', function() {
 });
 
 
+/*==================================
+ =            Copy dist to flask   =
+ ==================================*/
+
+gulp.task('flask_dest', function() {
+  return gulp.src("./www/**/*")
+    .pipe(gulp.dest(config.flask_dest));
+});
+
 /*=================================================
 =            Copy html files to dest              =
 =================================================*/
@@ -212,6 +224,15 @@ gulp.task('less', function () {
 
 
 /*====================================================================
+ =            Compile CoffeeScript                                   =
+ ====================================================================*/
+gulp.task('coffee', function() {
+  gulp.src('./src/**/*.coffee')
+    .pipe(coffee({bare: true}).on('error', gutil.log))
+    .pipe(gulp.dest('./src/'))
+});
+
+/*====================================================================
 =            Compile and minify js generating source maps            =
 ====================================================================*/
 // - Orders ng deps automatically
@@ -226,7 +247,7 @@ gulp.task('js', function() {
     .pipe(sourcemaps.init())
     .pipe(concat('app.js'))
     .pipe(ngAnnotate())
-    .pipe(uglify())
+    // .pipe(uglify())
     .pipe(rename({suffix: '.min'}))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(path.join(config.dest, 'js')));
@@ -243,8 +264,10 @@ gulp.task('watch', function () {
   }
   gulp.watch(['./src/html/**/*'], ['html']);
   gulp.watch(['./src/less/**/*'], ['less']);
+  gulp.watch(['./src/js/**/*.coffee'], ['coffee']);
   gulp.watch(['./src/js/**/*', './src/templates/**/*', config.vendor.js], ['js']);
   gulp.watch(['./src/images/**/*'], ['images']);
+  gulp.watch(['./www/**/*'], ['flask_dest']);
 });
 
 
