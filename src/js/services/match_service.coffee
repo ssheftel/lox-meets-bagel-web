@@ -7,13 +7,14 @@ factory(
 
         matchService = {}
         matchService.matches = {}
-        
+
+
         #Promise for matches
-        matchService.load = -> $http.get(matchService.matches)
+        matchService.load = (userId) -> $http.get(APP_CONFIG.match.replace('uid',userId))
 
         #Promise for matches + updates MatchService.matches
-        matchService.get = ->
-            matchService.load().then (resp) ->
+        matchService.get = (userId=TokenService.getId()) ->
+            matchService.load(userId).then (resp) ->
                 matchService.matches = resp.data
                 return resp.data
 
