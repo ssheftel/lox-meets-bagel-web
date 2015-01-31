@@ -1,8 +1,9 @@
 angular.module(
-  'LoxMeetsBagel.services.AccountService', []
+  'LoxMeetsBagel.services.AccountService', ['LoxMeetsBagel.services.TokenService']
 ).
-factory('AccountService', (APP_CONFIG, $http, TokenService) ->
-  userService = {
+factory('AccountService', (APP_CONFIG, $http, TokenService, $q) ->
+  userService = {}
+  userService.info = {
     'first_name': '',
     'last_name': '',
     'email': '',
@@ -14,22 +15,18 @@ factory('AccountService', (APP_CONFIG, $http, TokenService) ->
   }
 
   userService.getAccountInfo = ->
-    if not TokenService.getId()
-      TokenService.goToLogin()
-      return userService
-    else
-      $http.get("#{APP_CONFIG.user}/#{TokenService.id}").then( (resp) ->
-        data = resp.data
-        userService.first_name = data.first_name
-        userService.last_name = data.last_name
-        userService.email = data.email
-        userService.gender = data.gender
-        userService.bio = data.bio
-        userService.age = data.age
-        userService.admin = data.admin
-        userService.has_photo = data.has_phone
-        return userService
-      )
+    return $http.get("#{APP_CONFIG.user}/#{TokenService.getId()}").then( (resp) ->
+      data = resp.data
+      userService.info.first_name = data.first_name
+      userService.info.last_name = data.last_name
+      userService.info.email = data.email
+      userService.info.gender = data.gender
+      userService.info.bio = data.bio
+      userService.info.age = data.age
+      userService.info.admin = data.admin
+      userService.info.has_photo = data.has_photo
+      return userService.info
+    )
 
 
   userService

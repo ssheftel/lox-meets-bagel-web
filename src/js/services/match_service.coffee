@@ -1,8 +1,8 @@
 angular.module(
-    'LoxMeetsBagel.services.MatchService', []
+    'LoxMeetsBagel.services.MatchService', ['LoxMeetsBagel.services.TokenService']
 ).
 factory(
-    'MatchService', (APP_CONFIG, $http) ->
+    'MatchService', (APP_CONFIG, $http, TokenService) ->
         #APP_CONFIG.match# = /api/v1.0/match
 
         matchService = {}
@@ -14,7 +14,7 @@ factory(
 
         #Promise for matches + updates MatchService.matches
         matchService.get = (userId=TokenService.getId()) ->
-            matchService.load(userId).then (resp) ->
+            return matchService.load(userId).then (resp) ->
                 matchService.matches = resp.data
                 return resp.data
 

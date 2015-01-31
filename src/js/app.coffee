@@ -1,16 +1,18 @@
 angular.module("LoxMeetsBagel", [
   'ui.router'
   "mobile-angular-ui"
-  "LoxMeetsBagel.controllers.Main"
   #ME
-  'LoxMeetsBagel.services.LocalStorageService'
   'LoxMeetsBagel.services.TokenService'
+  'LoxMeetsBagel.services.LocalStorageService'
   'LoxMeetsBagel.services.AccountService'
+  'LoxMeetsBagel.services.ProfileService'
   'LoxMeetsBagel.services.MatchService'
   'LoxMeetsBagel.services.LikeService'
 
+  "LoxMeetsBagel.controllers.Main"
   'LoxMeetsBagel.controllers.Home'
   'LoxMeetsBagel.controllers.Login'
+  'LoxMeetsBagel.controllers.Profile'
 ])
 .constant( 'APP_CONFIG',
     #APP_CONFIG
@@ -22,24 +24,18 @@ angular.module("LoxMeetsBagel", [
 .config(
     #Add Auth Headers
     ($httpProvider) ->
-        interceptor = (APP_CONFIG, $injector, $q, $rootScope, $location) ->
+        interceptor = (APP_CONFIG, $injector, $q, $rootScope) ->
             request = (config) ->
                 TokenService = $injector.get('TokenService')
-                config.headers['Authorization'] ?= "Basic #{TokenService.token}"
+                config.headers['Authorization'] ?= "Basic #{TokenService.getToken()}"
                 return config
-
-            response = (resp) ->
-              if resp.config.url == APP_CONFIG.token
-                $injector.get('TokenService').token = resp.data.token
-                $injector.get('AccountService').id = resp.data.id
-              return resp || $q.when(resp)
 
             responseError = (rejection) ->
               switch rejection.status
                 when 401
                   if rejection.config.url != APP_CONFIG.token
                     $rootScope.$broadcast('auth:loginRequired')
-                    $location.path('/login')
+                    $injector('$state').go('login')
                 when 403 then $rootScope.$broadcast('auth:forbidden')
                 when 404 then $rootScope.$broadcast('page:notFound')
                 when 500 then $rootScope.$broadcast('server:error')
@@ -47,7 +43,7 @@ angular.module("LoxMeetsBagel", [
 
 
             #TODO:Add Error Handler
-            {request, response, responseError}
+            {request, responseError}
         $httpProvider.interceptors.push(interceptor)
 
 )
@@ -61,12 +57,18 @@ angular.module("LoxMeetsBagel", [
         templateUrl: 'home.html'
         controller: 'HomeController'
         resolve:
-          userId: (TokenService) -> TokenService.getId()
+          userId: (TokenService, $q) ->
+            TokenService.getId()
 
       $stateProvider.state 'login',
         url: '/login'
         templateUrl: 'login.html'
         controller: 'LoginController'
+
+      $stateProvider.state 'profile',
+        url: '/profile'
+        templateUrl: 'profile.html'
+        controller: 'ProfileController'
 
 
       return

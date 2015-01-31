@@ -1,45 +1,49 @@
 #AuthService
 angular.module(
-    'LoxMeetsBagel.services.TokenService', []
+  'LoxMeetsBagel.services.TokenService', []
 ).
 factory(
-    'TokenService', (APP_CONFIG, $http, $window, $location) ->
-        #APP_CONFIG.token# = /api/v1.0/token
+  'TokenService', (APP_CONFIG, $http, $window, $state) ->
+    #APP_CONFIG.token# = /api/v1.0/token
+    ###
+    ls = $window.localStoreage or {}
+    tokenService.clearCache() -> null
+    tokenService.getToken = cached token
+    tokenService.getId() = cached id
+    tokenService.Load() -> Promis for {token, id}
+    tokenService.login(email, password) -> promist that
+    ###
 
-        tokenService = {}
-        tokenService.token = 'Basic none:unused'
-        tokenService.id = null
+    tokenService = {}
+
+    tokenService.ls = $window.localStorage or {}
+    tokenService.clearCache = ->
+        delete tokenService.ls['id']
+        delete tokenService.ls['token']
+        null
+
+    tokenService.getToken = -> tokenService.ls['token']
+    tokenService.getId = -> tokenService.ls['id']
+    tokenService.load = ->
+        return $http.get(APP_CONFIG.token).then (resp) ->
+            token = resp.data.token
+            id = resp.data.id
+            if token != tokenService.ls['token']
+                tokenService.ls['token'] = token
+            if id != tokenService['id']
+                tokenService.ls['id'] = id
+            return {token, id}
+
+    tokenService.login = (email, password) ->
+        return $http.post(APP_CONFIG.token, {email, password}).then (resp) ->
+            token = resp.data.token
+            id = resp.data.id
+            if token != tokenService.ls['token']
+                tokenService.ls['token'] = token
+            if id != tokenService['id']
+                tokenService.ls['id'] = id
+            return {token, id}
 
 
-        tokenService.get = ->
-            if not tokenService.token
-                tokenService.goToLogin()
-                return null
-            return tokenService.token
-
-        tokenService.getId = ->
-            if not tokenService.id
-                tokenService.goToLogin()
-                return null
-            return tokenService.id
-
-        tokenService.login = (email, password) ->
-            #TODO: add Logging
-            $http.post(APP_CONFIG.token, {email, password})
-                .then (resp) ->
-                    tokenService.token = resp.data.token
-                    tokenService.id = resp.data.id
-                    return tokenService.token
-
-        #Promise to Token, loads from server and sets service prop
-        tokenService.load = ->
-            $http.get(APP_CONFIG.token).then (resp) ->
-                tokenService.token = resp.data.token
-                tokenService.id = resp.data.id
-                return tokenService.token
-
-        tokenService.goToLogin = ->
-            $location.path('/login')
-
-        tokenService
+    tokenService
 )
