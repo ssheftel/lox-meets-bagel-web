@@ -20,6 +20,9 @@ angular.module("LoxMeetsBagel", [
     match: '/user/uid/match'
     token: '/api/v1.0/token'
     user: '/api/v1.0/user'
+    photoUrl: 'http://res.cloudinary.com/lox-meets-bagel/image/upload/v1422675531/{{userId}}.jpg'
+    thumbUrl: 'http://res.cloudinary.com/lox-meets-bagel/image/upload/w_150,c_scale,c_thumb,g_face/{{userId}}.jpg'
+    defaultFace: 'default_face'
 )
 .config(
     #Add Auth Headers

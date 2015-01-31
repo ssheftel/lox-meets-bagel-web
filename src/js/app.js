@@ -2,7 +2,10 @@ angular.module("LoxMeetsBagel", ['ui.router', "mobile-angular-ui", 'LoxMeetsBage
   like: '/api/v1.0/like',
   match: '/user/uid/match',
   token: '/api/v1.0/token',
-  user: '/api/v1.0/user'
+  user: '/api/v1.0/user',
+  photoUrl: 'http://res.cloudinary.com/lox-meets-bagel/image/upload/v1422675531/{{userId}}.jpg',
+  thumbUrl: 'http://res.cloudinary.com/lox-meets-bagel/image/upload/w_150,c_scale,c_thumb,g_face/{{userId}}.jpg',
+  defaultFace: 'default_face'
 }).config(function($httpProvider) {
   var interceptor;
   interceptor = function(APP_CONFIG, $injector, $q, $rootScope) {

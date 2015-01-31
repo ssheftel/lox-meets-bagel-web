@@ -1,4 +1,4 @@
 angular.module('LoxMeetsBagel.controllers.Home', ['LoxMeetsBagel.services.AccountService'])
-.controller( 'HomeController', ($scope, AccountService, APP_CONFIG) ->
-  $scope.last_name = AccountService.last_name
+.controller( 'HomeController', ($scope, AccountService, APP_CONFIG, $window, ProfileService) ->
+ $scope.img = ProfileService.getPhoto(APP_CONFIG.defaultFace)
 )
