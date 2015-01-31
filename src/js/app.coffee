@@ -1,8 +1,9 @@
 angular.module("LoxMeetsBagel", [
-  "ngRoute"
+  'ui.router'
   "mobile-angular-ui"
   "LoxMeetsBagel.controllers.Main"
   #ME
+  'LoxMeetsBagel.services.LocalStorageService'
   'LoxMeetsBagel.services.TokenService'
   'LoxMeetsBagel.services.AccountService'
   'LoxMeetsBagel.services.MatchService'
@@ -52,19 +53,21 @@ angular.module("LoxMeetsBagel", [
 )
 .config(
     #Route Config 
-    ($routeProvider) ->
+    ($stateProvider, $urlRouterProvider) ->
+      $urlRouterProvider.otherwise("/home");
 
-        $routeProvider.when "/home",
-            templateUrl: "home.html"
-            controller: 'HomeController'
-            resolve:
-              userId: (TokenService) -> TokenService.getId()
-              accountService: 10
+      $stateProvider.state 'home',
+        url: '/home'
+        templateUrl: 'home.html'
+        controller: 'HomeController'
+        resolve:
+          userId: (TokenService) -> TokenService.getId()
 
-        $routeProvider.when '/login',
-          templateUrl: 'login.html'
-          controller: 'LoginController'
+      $stateProvider.state 'login',
+        url: '/login'
+        templateUrl: 'login.html'
+        controller: 'LoginController'
 
-        $routeProvider.otherwise redirectTo: '/home'
-        return
+
+      return
 )

@@ -13,7 +13,7 @@ var config = {
   vendor: {
     js: [
       './bower_components/angular/angular.js',
-      './bower_components/angular-route/angular-route.js',
+      './bower_components/angular-ui-router/release/angular-ui-router.js',
       './bower_components/mobile-angular-ui/dist/js/mobile-angular-ui.js'
     ],
 
@@ -100,8 +100,9 @@ gulp.task('clean', function (cb) {
         path.join(config.dest, 'css'),
         path.join(config.dest, 'js'),
         path.join(config.dest, 'fonts')
+        //path.join(config.flask_dest)
       ], { read: false })
-     .pipe(rimraf());
+     .pipe(rimraf({ force: true }));
 });
 
 
@@ -175,10 +176,10 @@ gulp.task('fonts', function() {
  =            Copy dist to flask   =
  ==================================*/
 
-gulp.task('flask_dest', function() {
-  return gulp.src("./www/**/*")
-    .pipe(gulp.dest(config.flask_dest));
-});
+//gulp.task('flask_dest', function() {
+//  return gulp.src("./www/**/*")
+//    .pipe(gulp.dest(config.flask_dest));
+//});
 
 /*=================================================
 =            Copy html files to dest              =
@@ -267,7 +268,7 @@ gulp.task('watch', function () {
   gulp.watch(['./src/js/**/*.coffee'], ['coffee']);
   gulp.watch(['./src/js/**/*', './src/templates/**/*', config.vendor.js], ['js']);
   gulp.watch(['./src/images/**/*'], ['images']);
-  gulp.watch(['./www/**/*'], ['flask_dest']);
+  //gulp.watch(['./www/**/*'], ['flask_dest']);
 });
 
 

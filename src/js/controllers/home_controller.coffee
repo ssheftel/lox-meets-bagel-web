@@ -1,4 +1,4 @@
-angular.module('LoxMeetsBagel.controllers.Home', [])
-.controller( 'HomeController', ($scope, userId, accountService, APP_CONFIG) ->
-  $scope.last_name = accountService.last_name
+angular.module('LoxMeetsBagel.controllers.Home', ['LoxMeetsBagel.services.AccountService'])
+.controller( 'HomeController', ($scope, userId, AccountService, APP_CONFIG) ->
+  $scope.last_name = AccountService.last_name
 )

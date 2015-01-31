@@ -1,4 +1,4 @@
-angular.module("LoxMeetsBagel", ["ngRoute", "mobile-angular-ui", "LoxMeetsBagel.controllers.Main", 'LoxMeetsBagel.services.TokenService', 'LoxMeetsBagel.services.AccountService', 'LoxMeetsBagel.services.MatchService', 'LoxMeetsBagel.services.LikeService', 'LoxMeetsBagel.controllers.Home', 'LoxMeetsBagel.controllers.Login']).constant('APP_CONFIG', {
+angular.module("LoxMeetsBagel", ['ui.router', "mobile-angular-ui", "LoxMeetsBagel.controllers.Main", 'LoxMeetsBagel.services.LocalStorageService', 'LoxMeetsBagel.services.TokenService', 'LoxMeetsBagel.services.AccountService', 'LoxMeetsBagel.services.MatchService', 'LoxMeetsBagel.services.LikeService', 'LoxMeetsBagel.controllers.Home', 'LoxMeetsBagel.controllers.Login']).constant('APP_CONFIG', {
   like: '/api/v1.0/like',
   match: '/user/uid/match',
   token: '/api/v1.0/token',
@@ -48,22 +48,21 @@ angular.module("LoxMeetsBagel", ["ngRoute", "mobile-angular-ui", "LoxMeetsBagel.
     };
   };
   return $httpProvider.interceptors.push(interceptor);
-}).config(function($routeProvider) {
-  $routeProvider.when("/home", {
-    templateUrl: "home.html",
+}).config(function($stateProvider, $urlRouterProvider) {
+  $urlRouterProvider.otherwise("/home");
+  $stateProvider.state('home', {
+    url: '/home',
+    templateUrl: 'home.html',
     controller: 'HomeController',
     resolve: {
       userId: function(TokenService) {
         return TokenService.getId();
-      },
-      accountService: 10
+      }
     }
   });
-  $routeProvider.when('/login', {
+  $stateProvider.state('login', {
+    url: '/login',
     templateUrl: 'login.html',
     controller: 'LoginController'
-  });
-  $routeProvider.otherwise({
-    redirectTo: '/home'
   });
 });

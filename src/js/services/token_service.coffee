@@ -10,6 +10,7 @@ factory(
         tokenService.token = 'Basic none:unused'
         tokenService.id = null
 
+
         tokenService.get = ->
             if not tokenService.token
                 tokenService.goToLogin()
