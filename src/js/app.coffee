@@ -13,6 +13,10 @@ angular.module("LoxMeetsBagel", [
   'LoxMeetsBagel.controllers.Home'
   'LoxMeetsBagel.controllers.Login'
   'LoxMeetsBagel.controllers.Profile'
+  'LoxMeetsBagel.controllers.Scroll'
+  'LoxMeetsBagel.controllers.Match'
+  'LoxMeetsBagel.controllers.Likes'
+  'LoxMeetsBagel.controllers.Suggestion'
 ])
 .constant( 'APP_CONFIG',
     #APP_CONFIG
@@ -73,6 +77,25 @@ angular.module("LoxMeetsBagel", [
         templateUrl: 'profile.html'
         controller: 'ProfileController'
 
+      $stateProvider.state 'scroll',
+        url: '/scroll'
+        templateUrl: 'scroll.html'
+        controller: 'ScrollController'
+
+      $stateProvider.state 'match',
+        url: '/match'
+        templateUrl: 'match.html'
+        controller: 'MatchController'
+
+      $stateProvider.state 'likes',
+        url: '/likes'
+        templateUrl: 'likes.html'
+        controller: 'LikesController'
+
+      $stateProvider.state 'suggestion',
+        url: '/suggestion'
+        templateUrl: 'suggestion.html'
+        controller: 'SuggestionController'
 
       return
 )

@@ -1,19 +1,76 @@
-<section class="section container-fluid">
-  <h1 class="page-header">Wellcome to Lox Meets Bagel</h1>
-</section>
+<div id="home-template">
+  <section class="section container-fluid">
+    <h1 class="page-header">Wellcome to Lox Meets Bagel</h1>
+  </section>
 
 
-<div ui-content-for="title">
-  <span>Home</span>
-</div>
-
-<div class="scrollable">
-  <div class="scrollable-content section">
-    <img style="position: absolute;text-align: center;" ng-src="{{img}}">
-
+  <div ui-content-for="title">
+    <span>Home</span>
   </div>
-</div>
 
-<div ui-content-for="navbarAction">
-  <div class="btn" ng-click="logout()"><i class="fa fa-sign-out" ></i> Logout</div>
+  <div class="scrollable">
+    <div class="scrollable-content">
+      <div class="list-group text-center">
+        <div class="list-group-item list-group-item-home">
+          <h1>Lox Meets Bagel <small>v0.1.0</small>
+          </h1>
+        </div>
+        <!---->
+        <div class="list-group-item list-group-item-home">
+          <div>
+            <a ui-sref="profile"><i class="fa fa-user feature-icon text-primary"></i></a>
+          </div>
+          <div >
+            <h3 class="home-heading">My Profile</h3>
+            Upload your photo write your bio
+          </div>
+        </div>
+        <!---->
+        <div class="list-group-item list-group-item-home">
+          <div>
+            <a ui-sref="scroll"><i class="fa fa-users feature-icon text-primary"></i></a>
+          </div>
+          <div>
+            <h3 class="home-heading">All Participants</h3>
+            Scroll through and search all participants of the opposite gender
+          </div>
+        </div>
+        <!---->
+        <div class="list-group-item list-group-item-home">
+          <div>
+            <a ui-sref="likes"><i class="fa fa-thumbs-up feature-icon text-primary"></i></a>
+          </div>
+          <div>
+            <h3 class="home-heading">My Likes</h3>
+            View all individuals you've liked
+          </div>
+        </div>
+        <!---->
+        <div class="list-group-item list-group-item-home">
+          <div>
+            <a ui-sref="suggestion"><i class="fa fa-certificate feature-icon text-primary"></i></a>
+          </div>
+          <div>
+            <h3 class="home-heading">Suggested Matches</h3>
+            The individuals our algorithm identified as being most compatible with you
+          </div>
+        </div>
+        <!---->
+        <div class="list-group-item list-group-item-home">
+          <div>
+            <a ui-sref="match"><i class="fa fa-heart feature-icon text-primary"></i></a>
+          </div>
+          <div>
+            <h3 class="home-heading">Matches</h3>
+            View all your individuals you've matched with
+          </div>
+        </div>
+        <!---->
+      </div>
+    </div>
+  </div>
+
+  <div ui-content-for="navbarAction">
+    <div class="btn" ng-click="logout()"><i class="fa fa-sign-out" ></i> Logout</div>
+  </div>
 </div>
