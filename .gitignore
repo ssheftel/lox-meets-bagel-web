@@ -140,3 +140,4 @@ www
 src/js/services/*.js
 src/js/directives/*.js
 src/js/controllers/*.js
+www
