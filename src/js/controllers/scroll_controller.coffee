@@ -1,29 +1,23 @@
 angular.module('LoxMeetsBagel.controllers.Scroll', [])
-.controller( 'ScrollController', ($scope, APP_CONFIG, $rootScope, TokenService, AccountService, LikeService, info, participants) ->
+.controller( 'ScrollController', ($scope, $rootScope, uc, participants, LikeService) ->
   $scope.participants = participants
-  $scope.searchText = {q: ''}
-  $scope.selected = {}
-  $scope.selected.likes = LikeService.likes
-
-  $scope.thumbImage = (userObj) ->
-    if userObj.photo_name
-      imgurl = APP_CONFIG.thumbUrl.replace('{{userId}}', userObj.photo_name)
-    else
-      imgurl = APP_CONFIG.thumbUrl.replace('{{userId}}', APP_CONFIG.defaultFace)
-    return imgurl
-
-
-  $scope.$watchCollection LikeService.getRaw, (newVal) ->
-    $scope.selected.likes = newVal
+  $scope.scroll = {}
+  $scope.scroll.q = ''
+  $scope.scroll.likes = uc.getLikes()
+  $scope.$watchCollection uc.getLikes, (newLikes, oldLikes, scope) ->
+    $scope.scroll.likes = newLikes
 
   #
   $scope.unlikePerson = (unlikeUserId) ->
-    userId = TokenService.getId()
-    LikeService.remove(userId, unlikeUserId)
+    return LikeService.remove(uc.get('id'), unlikeUserId).then (likes) ->
+      uc.setLikes(likes)
+      return likes
+
   #
   $scope.likePerson = (likeUserId) ->
-    userId = TokenService.getId()
-    LikeService.add(userId, likeUserId)
+    LikeService.add(uc.get('id'), likeUserId).then (likes) ->
+      uc.setLikes(likes)
+      return likes
 
 
   return

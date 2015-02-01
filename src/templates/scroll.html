@@ -6,21 +6,21 @@
   <!--ng-if="Ui.active('searchBar')"-->
   <input
           type="search"
-          ng-model="searchText.q"
+          ng-model="scroll.q"
           class="form-control scrollable-header input-lg"
           placeholder="Search.." />
 
   <div class="scrollable-content" ui-scroll-bottom='bottomReached()'>
     <div class="list-group">
-      <div ng-repeat="participant in participants | filterBy:['first_name', 'last_name', 'id']:searchText.q" class="list-group-item">
-        <img ng-src="{{thumbImage(participant)}}">
+      <div ng-repeat="participant in participants | filterBy:['first_name', 'last_name', 'id']:scroll.q" class="list-group-item">
+        <img ng-src="{{PhotoService.thumbnailUrl(participant)}}">
         <!--<img src="http://res.cloudinary.com/lox-meets-bagel/image/upload/w_150,c_scale,c_thumb,g_face/default_face.jpg" class="img-thumbnail img-responsive">-->
         <span style="position: absolute;">
           <h2 style="display:inline;">{{ participant.first_name }} {{participant.last_name}} <small>(#{{participant.id}})</small></h2>
-            <span ng-show="selected.likes.indexOf(0 + participant.id) != -1">
+            <span ng-show="scroll.likes.indexOf(0 + participant.id) != -1">
               <a ng-click="unlikePerson(participant.id)" class="btn btn-lg" href="" ><i class="scroll-liked-selected fa fa-star fa-5"></i></a>
             </span>
-            <span ng-show="selected.likes.indexOf(0 + participant.id) == -1">
+            <span ng-show="scroll.likes.indexOf(0 + participant.id) == -1">
               <a ng-click="likePerson(participant.id)" class="btn btn-lg" ><i class="scroll-liked-unselected fa fa-star-o fa-5"></i></a>
             </span>
         </span>

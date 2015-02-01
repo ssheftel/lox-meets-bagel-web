@@ -1,10 +1,10 @@
 angular.module("LoxMeetsBagel.controllers.Main", ['LoxMeetsBagel.services.UserContextService', 'LoxMeetsBagel.services.TokenService', 'LoxMeetsBagel.services.AccountService']).
-controller "MainController", ($scope, $state, $rootScope, UserContextService, TokenService, AccountService) ->
+controller "MainController", ($scope, $state, $rootScope, UserContextService, PhotoService) ->
   $rootScope.uc = UserContextService
+  $rootScope.PhotoService = PhotoService
+  $rootScope.$state = $state
   $scope.globals = {}
   $scope.globals.$state = $state
-  $scope.globals.AccountService = AccountService
-  $scope.globals.TokenService = TokenService
 
   $rootScope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams) ->
     $rootScope.loading = true
@@ -15,6 +15,6 @@ controller "MainController", ($scope, $state, $rootScope, UserContextService, To
     return
 
   $scope.logout = ->
-    TokenService.clearCache()
+    UserContextService.deleteToken()
     $state.go('login')
     return

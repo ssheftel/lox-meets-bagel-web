@@ -2,7 +2,7 @@ angular.module(
     'LoxMeetsBagel.services.LikeService', ['LoxMeetsBagel.services.TokenService']
 ).
 factory(
-    'LikeService', (APP_CONFIG, $http, TokenService) ->
+    'LikeService', (APP_CONFIG, $http) ->
         #APP_CONFIG.like# = /api/v1.0/like
 
         likeService = {}

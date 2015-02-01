@@ -47,7 +47,7 @@ angular.module("LoxMeetsBagel", [
                 UserContextService = $injector.get('UserContextService')
                 #config.headers['Authorization'] ?= "Basic #{TokenService.getToken()}"
                 #config.headers['TOKEN'] ?= "#{TokenService.getToken()}"
-                config.headers['TOKEN'] ?= "#{UserContextService.get('token')}"
+                config.headers['TOKEN'] ?= "#{UserContextService.getToken()}"
                 return config
 
             response = (resp) ->

@@ -14,6 +14,8 @@ factory 'PhotoService', (APP_CONFIG, FileUploadService) ->
 
   photoService.uploadPhoto = (userId, file) ->
     url = APP_CONFIG.uploadPhoto.replace('{{userId}}', userId)
-    return FileUploadService.uploadFileToUrl(file, url)
+    return FileUploadService.uploadFileToUrl(file, url).then (resp) ->
+      {has_photo, photo_name} = resp.data
+      {has_photo, photo_name}
 
   return photoService
