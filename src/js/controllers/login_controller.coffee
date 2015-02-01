@@ -1,5 +1,5 @@
 angular.module('LoxMeetsBagel.controllers.Login', ['LoxMeetsBagel.services.LocalStorageService', 'LoxMeetsBagel.services.TokenService'])
-.controller( 'LoginController', ($scope, TokenService, $state, LocalStorageService) ->
+.controller( 'LoginController', ($scope, UserContextService, TokenService, $state, LocalStorageService) ->
   $scope.rememberMe = true
   if LocalStorageService.getItem('lox_email')
     $scope.email = LocalStorageService.getItem('lox_email')
@@ -7,7 +7,7 @@ angular.module('LoxMeetsBagel.controllers.Login', ['LoxMeetsBagel.services.Local
     $scope.password = LocalStorageService.getItem('lox_password')
 
   $scope.login = (email, password) ->
-    TokenService.login(email, password).then ->
+    UserContextService.login(email, password).then ->
       if $scope.rememberMe
         LocalStorageService.setItem('lox_email', email)
         LocalStorageService.setItem('lox_password', password)

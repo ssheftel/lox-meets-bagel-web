@@ -1,5 +1,6 @@
-angular.module("LoxMeetsBagel.controllers.Main", ['LoxMeetsBagel.services.TokenService', 'LoxMeetsBagel.services.AccountService']).
-controller "MainController", ($scope, $state, $rootScope, TokenService, AccountService) ->
+angular.module("LoxMeetsBagel.controllers.Main", ['LoxMeetsBagel.services.UserContextService', 'LoxMeetsBagel.services.TokenService', 'LoxMeetsBagel.services.AccountService']).
+controller "MainController", ($scope, $state, $rootScope, UserContextService, TokenService, AccountService) ->
+  $rootScope.uc = UserContextService
   $scope.globals = {}
   $scope.globals.$state = $state
   $scope.globals.AccountService = AccountService

@@ -5,9 +5,9 @@
 <div class="scrollable" ui-state="">
   <div class="scrollable-content" ui-scroll-bottom="">
     <div class="list-group">
-      <img ng-src="{{thumbImage(info)}}">
+      <img ng-src="{{photoService.photoUrl(uc.get('photo_name'))}}">
       <input type="file" id="exampleInputFile" file-model="myFile">
-      <button ng-click="uploadFile()">upload me</button>
+      <button ng-click="upload()">upload me</button>
     </div>
   </div>
 </div>

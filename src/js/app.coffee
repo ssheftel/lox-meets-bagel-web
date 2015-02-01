@@ -4,12 +4,14 @@ angular.module("LoxMeetsBagel", [
   "angular.filter"
   'mobile-angular-ui.gestures'
   #ME
+  'LoxMeetsBagel.services.UserContextService'
   'LoxMeetsBagel.services.LocalStorageService'
   'LoxMeetsBagel.services.TokenService'
   'LoxMeetsBagel.services.ParticipantService'
   'LoxMeetsBagel.services.AccountService'
   'LoxMeetsBagel.services.FileUploadService'
   'LoxMeetsBagel.services.ProfileService'
+  'LoxMeetsBagel.services.PhotoService'
   'LoxMeetsBagel.services.MatchService'
   'LoxMeetsBagel.services.LikeService'
 
@@ -28,6 +30,7 @@ angular.module("LoxMeetsBagel", [
     match: '/user/uid/match'
     token: '/api/v1.0/token'
     user: '/api/v1.0/user'
+    context: '/api/v1.0/context' # new master info endpoint
     getLikes: '/api/v1.0/user/{{userId}}/like'
     uploadPhoto: '/api/v1.0/user/{{userId}}/photo'
     likeSomeone: '/api/v1.0/user/{{userId}}/like/{{likeUserId}}'
@@ -40,9 +43,11 @@ angular.module("LoxMeetsBagel", [
     ($httpProvider) ->
         interceptor = (APP_CONFIG, $injector, $q, $rootScope) ->
             request = (config) ->
-                TokenService = $injector.get('TokenService')
+                #TokenService = $injector.get('TokenService')
+                UserContextService = $injector.get('UserContextService')
                 #config.headers['Authorization'] ?= "Basic #{TokenService.getToken()}"
-                config.headers['TOKEN'] ?= "#{TokenService.getToken()}"
+                #config.headers['TOKEN'] ?= "#{TokenService.getToken()}"
+                config.headers['TOKEN'] ?= "#{UserContextService.get('token')}"
                 return config
 
             response = (resp) ->
@@ -75,7 +80,8 @@ angular.module("LoxMeetsBagel", [
         templateUrl: 'home.html'
         controller: 'HomeController'
         resolve:
-          userId: (TokenService) -> TokenService.load()
+          uc: (UserContextService) -> UserContextService.promise
+          #userId: (TokenService) -> TokenService.load()
 
       $stateProvider.state 'login',
         url: '/login'
@@ -87,23 +93,24 @@ angular.module("LoxMeetsBagel", [
         templateUrl: 'profile.html'
         controller: 'ProfileController'
         resolve:
-          userId: (TokenService) ->
-            return TokenService.load()
-          info: (userId, TokenService,AccountService) ->
-            `debugger`
-            return AccountService.getAccountInfo(userId.id)
+          #userId: (TokenService) ->
+          #  return TokenService.load()
+          #info: (userId, TokenService,AccountService) ->
+          #  `debugger`
+          #  return AccountService.getAccountInfo(userId.id)
+          uc: (UserContextService) -> UserContextService.promise
 
       $stateProvider.state 'scroll',
         url: '/scroll'
         templateUrl: 'scroll.html'
         controller: 'ScrollController'
         resolve:
-          info: (TokenService, AccountService) ->
-            AccountService.getAccountInfo(TokenService.getId())
-          participants: (TokenService, ParticipantService) ->
-            attractedTo = if TokenService.getGender() == 'M' then 'F' else 'M'
-            ParticipantService.load(attractedTo)
-          likes: (TokenService, LikeService) -> LikeService.get(TokenService.getId())
+          uc: (UserContextService) -> UserContextService.promise
+          #info: (TokenService, AccountService) ->
+          #  AccountService.getAccountInfo(TokenService.getId())
+          participants: (uc, ParticipantService) ->
+            ParticipantService.load(uc.get('attracted_to'))
+          #likes: (TokenService, LikeService) -> LikeService.get(TokenService.getId())
 
 
       $stateProvider.state 'match',
