@@ -1,0 +1,20 @@
+@import "mobile-angular-ui/src/less/variables.less";
+.profile-template {
+  .current-photo {
+    /* Extra small devices (phones, less than 768px) */
+    max-width: 400px;
+    // tablets
+    @media (min-width: @screen-sm-min) {
+      max-width: 550px;
+    }
+    //Laptops and small desktops
+    @media (min-width: @screen-md-min) {
+      max-width: 800px;
+    }
+
+    @media (min-width: @screen-lg-min) {
+      max-width: 1000px;
+    }
+
+  }
+}

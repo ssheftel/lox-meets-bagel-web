@@ -1,13 +1,83 @@
+
+
 <div ui-content-for="navbarAction">
   <div class="btn" ng-click="logout()"><i class="fa fa-sign-out" ></i> Logout</div>
 </div>
 
-<div class="scrollable" ui-state="">
-  <div class="scrollable-content" ui-scroll-bottom="">
-    <div class="list-group">
-      <img ng-src="{{photoService.photoUrl(uc.get('photo_name'))}}">
-      <input type="file" id="exampleInputFile" file-model="myFile">
-      <button ng-click="upload()">upload me</button>
+<div class="profile-template">
+  <div class="scrollable">
+    <div class="scrollable-content">
+
+      <div class="list-group text-center">
+        <div class="list-group-item list-group-item-home">
+          <h1>Profile
+          </h1>
+        </div>
+        <!---->
+        <div class="list-group-item list-group-item-home">
+          <div>
+            <!--<i class="fa fa-gamepad feature-icon text-primary"></i>-->
+            <img class="current-photo" ng-src="{{photoService.photoUrl(uc.get('photo_name'))}}">
+          </div>
+          <div>
+
+          </div>
+          <button type="button" class="btn btn-primary btn-lg ">Change Photo</button>
+        </div>
+        <!---->
+
+
+        <div class="list-group-item list-group-item-home">
+          <div>
+            <i class="fa fa-tachometer feature-icon  text-primary"></i>
+          </div>
+          <div>
+            <h3 class="home-heading">Test responsiveness and speed</h3>
+            Scroll, tap, navigate, test that everything is smooth
+          </div>
+        </div>
+        <!---->
+
+
+        <div class="list-group-item list-group-item-home">
+          <div>
+            <i class="fa fa-expand feature-icon  text-primary"></i>
+          </div>
+          <div>
+            <h3 class="home-heading">Resize your browser</h3>
+            Stretch and squeeze your browser window to see both mobile and desktop versions.
+          </div>
+        </div>
+        <!---->
+
+        <div class="list-group-item list-group-item-home">
+          <div>
+            <i class="fa fa-stethoscope feature-icon  text-primary"></i>
+          </div>
+          <div>
+            <h3 class="home-heading">Submit an issue</h3>
+            <p>Please submit any issue you'll find, <a href="https://github.com/mcasimir/mobile-angular-ui/issues" target='blank' id='#home-report'>reporting</a> your user agent string:<br>
+            </p>
+            <pre>{{userAgent}}</pre>
+            <p>
+              It would help a lot!
+            </p>
+          </div>
+        </div>
+        <!---->
+
+      </div>
+
     </div>
   </div>
 </div>
+
+<!--<div class="scrollable" ui-state="">-->
+  <!--<div class="scrollable-content" ui-scroll-bottom="">-->
+    <!--<div class="list-group">-->
+      <!--<img ng-src="{{photoService.photoUrl(uc.get('photo_name'))}}">-->
+      <!--<input type="file" id="exampleInputFile" file-model="myFile">-->
+      <!--<button ng-click="upload()">upload me</button>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
