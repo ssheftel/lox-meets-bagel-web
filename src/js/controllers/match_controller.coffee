@@ -1,5 +1,6 @@
 angular.module('LoxMeetsBagel.controllers.Match', [])
-.controller( 'MatchController', ($scope) ->
+.controller( 'MatchController', ($scope, AccountService, TokenService) ->
+
   return
 
 )

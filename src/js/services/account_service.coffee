@@ -2,33 +2,48 @@ angular.module(
   'LoxMeetsBagel.services.AccountService', ['LoxMeetsBagel.services.TokenService']
 ).
 factory('AccountService', (APP_CONFIG, $http, TokenService, $q) ->
-  userService = {}
-  userService.info = {
+  accountService = {}
+  accountService.info = {
     'first_name': '',
     'last_name': '',
     'email': '',
     'gender': '',
     'bio': '',
     'age': 0,
+    'id': 0,
     'admin': false,
-    'has_photo': false
+    'has_photo': false,
+    'photo_name': 'default_face'
   }
 
-  userService.getAccountInfo = ->
-    return $http.get("#{APP_CONFIG.user}/#{TokenService.getId()}").then( (resp) ->
+  accountService.getAccountInfo = (userId) ->
+    return $http.get("#{APP_CONFIG.user}/#{userId}").then( (resp) ->
       data = resp.data
-      userService.info.first_name = data.first_name
-      userService.info.last_name = data.last_name
-      userService.info.email = data.email
-      userService.info.gender = data.gender
-      userService.info.bio = data.bio
-      userService.info.age = data.age
-      userService.info.admin = data.admin
-      userService.info.has_photo = data.has_photo
-      return userService.info
+      info = accountService.info
+      info.first_name = data.first_name
+      info.last_name = data.last_name
+      info.email = data.email
+      info.gender = data.gender
+      info.id = data.id
+      info.bio = data.bio
+      info.age = data.age
+      info.admin = data.admin
+      info.has_photo = data.has_photo
+      info.photo_name = data.photo_name
+      return accountService.info
     )
 
+  accountService.infoPromise = (userId) ->
+    if accountService.info.gender != ''
+      return $q.when(accountService.info)
+    else
+      return accountService.getAccountInfo(userId)
 
-  userService
+    accountService.attractedToPromise = (userId) ->
+      return accountService.infoPromise(userId).then (info) ->
+        return if info.gender == 'M' then 'F' else 'M'
+
+
+  accountService
 
 )

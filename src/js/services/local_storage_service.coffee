@@ -6,26 +6,33 @@ factory('LocalStorageService', (APP_CONFIG, $window) ->
   dummyLs = {
     setItem: (k,v) ->
       dummyLsDb[k] = v
-      dummyLs
+      return
     getItem: (k) ->
       dummyLsDb[k]
+    removeItem: (k) ->
+      delete dummyLsDb[k]
+      return
     clear: ->
       for own k,v of dummyLsDb
         delete dummyLsDb[k]
-      dummyLsDb
+      return
   }
   ls = $window.localStorage or dummyLs
   localStorageService = {
   }
+  localStorageService.ls = ls
 
   localStorageService.setItem = (k, v) ->
     ls.setItem(k, v)
-    localStorageService
+    return
   localStorageService.getItem = (k) ->
     ls.getItem(k)
+  localStorageService.removeItem = (k) ->
+    ls.removeItem(k)
+    return
   localStorageService.clear = ->
     ls.clear()
-    localStorageService
+    return
 
   return localStorageService
 

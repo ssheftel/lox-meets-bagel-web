@@ -14,7 +14,9 @@ var config = {
     js: [
       './bower_components/angular/angular.js',
       './bower_components/angular-ui-router/release/angular-ui-router.js',
-      './bower_components/mobile-angular-ui/dist/js/mobile-angular-ui.js'
+      './bower_components/mobile-angular-ui/dist/js/mobile-angular-ui.js',
+      './bower_components/mobile-angular-ui/dist/js/mobile-angular-ui.gestures.js',
+      './bower_components/angular-filter/dist/angular-filter.js'
     ],
 
     fonts: [

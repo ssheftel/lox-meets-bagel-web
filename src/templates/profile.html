@@ -1,3 +1,13 @@
 <div ui-content-for="navbarAction">
   <div class="btn" ng-click="logout()"><i class="fa fa-sign-out" ></i> Logout</div>
 </div>
+
+<div class="scrollable" ui-state="">
+  <div class="scrollable-content" ui-scroll-bottom="">
+    <div class="list-group">
+      <img ng-src="{{thumbImage(info)}}">
+      <input type="file" id="exampleInputFile" file-model="myFile">
+      <button ng-click="uploadFile()">upload me</button>
+    </div>
+  </div>
+</div>

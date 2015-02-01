@@ -8,6 +8,7 @@
     "mobile-angular-ui": "1.2.x",
     "font-awesome": "4.x",
     "bootstrap": "3.x",
-    "angular-ui-router": "~0.2.13"
+    "angular-ui-router": "~0.2.13",
+    "angular-filter": "~0.5.2"
   }
 }

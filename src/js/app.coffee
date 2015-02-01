@@ -1,10 +1,14 @@
 angular.module("LoxMeetsBagel", [
   'ui.router'
   "mobile-angular-ui"
+  "angular.filter"
+  'mobile-angular-ui.gestures'
   #ME
-  'LoxMeetsBagel.services.TokenService'
   'LoxMeetsBagel.services.LocalStorageService'
+  'LoxMeetsBagel.services.TokenService'
+  'LoxMeetsBagel.services.ParticipantService'
   'LoxMeetsBagel.services.AccountService'
+  'LoxMeetsBagel.services.FileUploadService'
   'LoxMeetsBagel.services.ProfileService'
   'LoxMeetsBagel.services.MatchService'
   'LoxMeetsBagel.services.LikeService'
@@ -24,6 +28,9 @@ angular.module("LoxMeetsBagel", [
     match: '/user/uid/match'
     token: '/api/v1.0/token'
     user: '/api/v1.0/user'
+    getLikes: '/api/v1.0/user/{{userId}}/like'
+    uploadPhoto: '/api/v1.0/user/{{userId}}/photo'
+    likeSomeone: '/api/v1.0/user/{{userId}}/like/{{likeUserId}}'
     photoUrl: 'http://res.cloudinary.com/lox-meets-bagel/image/upload/v1422675531/{{userId}}.jpg'
     thumbUrl: 'http://res.cloudinary.com/lox-meets-bagel/image/upload/w_150,c_scale,c_thumb,g_face/{{userId}}.jpg'
     defaultFace: 'default_face'
@@ -34,15 +41,19 @@ angular.module("LoxMeetsBagel", [
         interceptor = (APP_CONFIG, $injector, $q, $rootScope) ->
             request = (config) ->
                 TokenService = $injector.get('TokenService')
-                config.headers['Authorization'] ?= "Basic #{TokenService.getToken()}"
+                #config.headers['Authorization'] ?= "Basic #{TokenService.getToken()}"
+                config.headers['TOKEN'] ?= "#{TokenService.getToken()}"
                 return config
 
+            response = (resp) ->
+              return resp
             responseError = (rejection) ->
               switch rejection.status
                 when 401
-                  if rejection.config.url != APP_CONFIG.token
-                    $rootScope.$broadcast('auth:loginRequired')
-                    $injector('$state').go('login')
+                  $rootScope.$broadcast('auth:loginRequired')
+                  $state = $injector.get('$state')
+                  if $state.current.name != 'login'
+                    $state.go('login')
                 when 403 then $rootScope.$broadcast('auth:forbidden')
                 when 404 then $rootScope.$broadcast('page:notFound')
                 when 500 then $rootScope.$broadcast('server:error')
@@ -50,7 +61,7 @@ angular.module("LoxMeetsBagel", [
 
 
             #TODO:Add Error Handler
-            {request, responseError}
+            {request, response, responseError}
         $httpProvider.interceptors.push(interceptor)
 
 )
@@ -64,8 +75,7 @@ angular.module("LoxMeetsBagel", [
         templateUrl: 'home.html'
         controller: 'HomeController'
         resolve:
-          userId: (TokenService, $q) ->
-            TokenService.getId()
+          userId: (TokenService) -> TokenService.load()
 
       $stateProvider.state 'login',
         url: '/login'
@@ -76,26 +86,49 @@ angular.module("LoxMeetsBagel", [
         url: '/profile'
         templateUrl: 'profile.html'
         controller: 'ProfileController'
+        resolve:
+          userId: (TokenService) ->
+            return TokenService.load()
+          info: (userId, TokenService,AccountService) ->
+            `debugger`
+            return AccountService.getAccountInfo(userId.id)
 
       $stateProvider.state 'scroll',
         url: '/scroll'
         templateUrl: 'scroll.html'
         controller: 'ScrollController'
+        resolve:
+          info: (TokenService, AccountService) ->
+            AccountService.getAccountInfo(TokenService.getId())
+          participants: (TokenService, ParticipantService) ->
+            attractedTo = if TokenService.getGender() == 'M' then 'F' else 'M'
+            ParticipantService.load(attractedTo)
+          likes: (TokenService, LikeService) -> LikeService.get(TokenService.getId())
+
 
       $stateProvider.state 'match',
         url: '/match'
         templateUrl: 'match.html'
         controller: 'MatchController'
+        resolve:
+          userId: (TokenService) ->
+            return TokenService.load()
+          info: (userId, TokenService,AccountService) ->
+            return AccountService.getAccountInfo(TokenService.getId())
 
       $stateProvider.state 'likes',
         url: '/likes'
         templateUrl: 'likes.html'
         controller: 'LikesController'
+        resolve:
+          userId: (TokenService) -> TokenService.load()
 
       $stateProvider.state 'suggestion',
         url: '/suggestion'
         templateUrl: 'suggestion.html'
         controller: 'SuggestionController'
+        resolve:
+          userId: (TokenService) -> TokenService.load()
 
       return
 )
