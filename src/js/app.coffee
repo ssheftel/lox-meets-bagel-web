@@ -15,6 +15,7 @@ angular.module("LoxMeetsBagel", [
   'LoxMeetsBagel.services.MatchService'
   'LoxMeetsBagel.services.LikeService'
 
+  'LoxMeetsBagel.controllers.Sidebar'
   "LoxMeetsBagel.controllers.Main"
   'LoxMeetsBagel.controllers.Home'
   'LoxMeetsBagel.controllers.Login'
