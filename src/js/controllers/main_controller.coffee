@@ -16,5 +16,6 @@ controller "MainController", ($scope, $state, $rootScope, UserContextService, Ph
 
   $rootScope.logout = $scope.logout = ->
     UserContextService.deleteToken()
+    UserContextService.clearContext()
     $state.go('login')
     return

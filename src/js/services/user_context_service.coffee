@@ -80,6 +80,16 @@ factory 'UserContextService', (APP_CONFIG, $http, $q, LocalStorageService) ->
     return userContext.set('likes', likes)
 
 
+  userContext.isAdmin = ->
+    return userContext.get('admin') or false
+
+  #to run on logout
+  userContext.clearContext = ->
+    userContext.deleteToken()
+    userContext.set('admin', false)
+    return
+
+
 
 
   #start loading context on injection

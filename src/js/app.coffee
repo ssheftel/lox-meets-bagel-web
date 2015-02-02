@@ -24,6 +24,10 @@ angular.module("LoxMeetsBagel", [
   'LoxMeetsBagel.controllers.Match'
   'LoxMeetsBagel.controllers.Likes'
   'LoxMeetsBagel.controllers.Suggestion'
+  'LoxMeetsBagel.controllers.AdminController'
+  'LoxMeetsBagel.controllers.AdminAppConfigController'
+  'LoxMeetsBagel.controllers.AdminRegistrationController'
+  'LoxMeetsBagel.controllers.AdminUserSearchController'
 ])
 .constant( 'APP_CONFIG',
     #APP_CONFIG
@@ -137,6 +141,29 @@ angular.module("LoxMeetsBagel", [
         controller: 'SuggestionController'
         resolve:
           userId: (TokenService) -> TokenService.load()
+
+      # admin root state
+      $stateProvider.state 'admin',
+        url: '/admin'
+        templateUrl: 'admin.html'
+        controller: 'Admin'
+        resolve:
+          uc: (UserContextService) -> UserContextService.promise
+
+      $stateProvider.state 'admin.app_config',
+        url: '/app_config',
+        templateUrl: 'admin_app_config.html'
+        controller: 'AdminAppConfig'
+
+      $stateProvider.state 'admin.registration',
+        url: '/admin_registration'
+        templateUrl: 'admin_registration.html'
+        controller: 'AdminRegistration'
+
+      $stateProvider.state 'admin.user_search',
+        url: '/user_search',
+        templateUrl: 'admin_user_search.html'
+        controller: 'AdminUserSearch'
 
       return
 )
