@@ -1,0 +1,26 @@
+<div class="face-scroll-item-container">
+  <!--persons info-->
+  <div class="lmb-info">
+    <div class="persons-name">{{ person.first_name }} {{person.last_name}}</div>
+    <div class="id-number">#{{person.id}}</div>
+  </div>
+
+  <!--image-->
+  <div class="lmb-thumb-img-container">
+    <img class="lmb-thumb-img img-thumbnail" ng-src="{{::thumbUrl}}">
+  </div>
+
+
+
+  <!--button and actions-->
+  <div class="lmb-actions">
+    <div class="btn-group">
+      <!--<a href class="btn btn-default" ng-class="{'active': likeState == -1}" ng-click="likeState=-1;"><i class="scroll-bottom-icon fa fa-thumbs-o-down"></i></a>-->
+      <!--<a href class="btn btn-default" ng-class="{'active': likeState == 0}" ng-click="likeState=0;unlikePerson();"><i class="scroll-bottom-icon fa fa-question"></i></a>-->
+      <!--<a href class="btn btn-default" ng-class="{'active': likeState == 1}" ng-click="likeState=1;likePerson();"><i class="scroll-bottom-icon fa fa-thumbs-o-up fa-6"></i></a>-->
+      <a href class="btn btn-default" ng-class="{'active': likeState == 1}" ng-click="likeState=1;likePerson();"><i class="scroll-bottom-icon fa fa-thumbs-o-up fa-6"></i></a>
+    </div>
+    <!--Like Button-->
+  </div>
+
+</div>

@@ -7,23 +7,34 @@
   <input
           type="search"
           ng-model="scroll.q"
-          class="form-control scrollable-header input-lg"
+          class="scroll-search-bar form-control scrollable-header input-lg"
           placeholder="Search.." />
 
   <div class="scrollable-content" ui-scroll-bottom='bottomReached()'>
-    <div class="list-group">
-      <div ng-repeat="participant in participants | filterBy:['first_name', 'last_name', 'id']:scroll.q" class="list-group-item">
-        <img ng-src="{{PhotoService.thumbnailUrl(participant)}}">
-        <!--<img src="http://res.cloudinary.com/lox-meets-bagel/image/upload/w_150,c_scale,c_thumb,g_face/default_face.jpg" class="img-thumbnail img-responsive">-->
-        <span style="position: absolute;">
-          <h2 style="display:inline;">{{ participant.first_name }} {{participant.last_name}} <small>(#{{participant.id}})</small></h2>
-            <span ng-show="scroll.likes.indexOf(0 + participant.id) != -1">
-              <a ng-click="unlikePerson(participant.id)" class="btn btn-lg" href="" ><i class="scroll-liked-selected fa fa-star fa-5"></i></a>
-            </span>
-            <span ng-show="scroll.likes.indexOf(0 + participant.id) == -1">
-              <a ng-click="likePerson(participant.id)" class="btn btn-lg" ><i class="scroll-liked-unselected fa fa-star-o fa-5"></i></a>
-            </span>
-        </span>
+    <div class="list-group text-center">
+      <div ng-repeat="person in participants | filterBy:['first_name', 'last_name', 'id']:scroll.q" class="list-group-item">
+        <div class="face-scroll-item-container">
+          <div class="lmb-info">
+            <div class="persons-name">{{ person.first_name }} {{person.last_name}}</div>
+            <div class="id-number">#{{person.id}}</div>
+            <span ng-hide="scroll.suggested_matches.indexOf(0 + person.id) == -1" class="subjected-match-star" style="font-size: 1.5em; display: inline-flex;"><i style="color:#FFD700;" class="fa fa-star"></i><small style="font-size: small;">suggested</br>match</small> </span>
+          </div>
+          <!--image-->
+          <div class="lmb-thumb-img-container">
+            <img class="lmb-thumb-img img-thumbnail" ng-src="{{::PhotoService.thumbnailUrl(person.photo_name)}}">
+          </div>
+          <!--button and actions-->
+          <div class="lmb-actions">
+            <div class="btn-group">
+              <a ng-class="{'active': scroll.likes.indexOf(0 + person.id) != -1}" ng-click="scroll.likes.indexOf(0 + person.id) == -1 ? likePerson(person.id) : unlikePerson(person.id)" ng-show="scroll.likes.indexOf(0 + person.id) != -1" href class="btn btn-default"><i class="scroll-bottom-icon fa fa-thumbs-o-up fa-6"></i></a>
+              <a  ng-click="likePerson(person.id)" ng-show="scroll.likes.indexOf(0 + person.id) == -1" href class="btn btn-default"><i class="scroll-bottom-icon fa fa-thumbs-o-up fa-6"></i></a>
+            </div>
+            <!--Like Button-->
+          </div>
+          <!---->
+        </div>
+
+
 
 
       </div>

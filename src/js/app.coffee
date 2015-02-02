@@ -15,6 +15,8 @@ angular.module("LoxMeetsBagel", [
   'LoxMeetsBagel.services.MatchService'
   'LoxMeetsBagel.services.LikeService'
 
+  'LoxMeetsBagel.directives.FaceScrollItem'
+
   'LoxMeetsBagel.controllers.Sidebar'
   "LoxMeetsBagel.controllers.Main"
   'LoxMeetsBagel.controllers.Home'
@@ -40,7 +42,7 @@ angular.module("LoxMeetsBagel", [
     uploadPhoto: '/api/v1.0/user/{{userId}}/photo'
     likeSomeone: '/api/v1.0/user/{{userId}}/like/{{likeUserId}}'
     photoUrl: 'http://res.cloudinary.com/lox-meets-bagel/image/upload/v1422675531/{{userId}}.jpg'
-    thumbUrl: 'http://res.cloudinary.com/lox-meets-bagel/image/upload/w_150,c_scale,c_thumb,g_face/{{userId}}.jpg'
+    thumbUrl: 'http://res.cloudinary.com/lox-meets-bagel/image/upload/h_130,c_scale,c_thumb,g_face/{{userId}}.jpg'
     defaultFace: 'default_face'
 )
 .config(
@@ -140,7 +142,9 @@ angular.module("LoxMeetsBagel", [
         templateUrl: 'suggestion.html'
         controller: 'SuggestionController'
         resolve:
-          userId: (TokenService) -> TokenService.load()
+          uc: (UserContextService) -> UserContextService.promise
+          participants: (uc, ParticipantService) ->
+            ParticipantService.load(uc.get('attracted_to'))
 
       # admin root state
       $stateProvider.state 'admin',

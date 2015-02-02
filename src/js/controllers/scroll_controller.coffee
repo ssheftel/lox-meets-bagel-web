@@ -4,6 +4,8 @@ angular.module('LoxMeetsBagel.controllers.Scroll', [])
   $scope.scroll = {}
   $scope.scroll.q = ''
   $scope.scroll.likes = uc.getLikes()
+  $scope.scroll.suggested_matches = uc.get('suggested_matches')
+  $scope.modal1 = false
   $scope.$watchCollection uc.getLikes, (newLikes, oldLikes, scope) ->
     $scope.scroll.likes = newLikes
 
@@ -19,7 +21,8 @@ angular.module('LoxMeetsBagel.controllers.Scroll', [])
       uc.setLikes(likes)
       return likes
 
-
+  $scope.testSwipe = ->
+    alert('hi')
   return
 
 
