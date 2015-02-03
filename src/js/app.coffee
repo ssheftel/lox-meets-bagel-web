@@ -34,7 +34,7 @@ angular.module("LoxMeetsBagel", [
 .constant( 'APP_CONFIG',
     #APP_CONFIG
     like: '/api/v1.0/like'
-    match: '/user/uid/match'
+    match: '/api/v1.0/user/uid/match'
     token: '/api/v1.0/token'
     user: '/api/v1.0/user'
     context: '/api/v1.0/context' # new master info endpoint
@@ -123,12 +123,15 @@ angular.module("LoxMeetsBagel", [
       $stateProvider.state 'match',
         url: '/match'
         templateUrl: 'match.html'
-        controller: 'MatchController'
+#        controller: 'MatchController'
         resolve:
-          userId: (TokenService) ->
-            return TokenService.load()
-          info: (userId, TokenService,AccountService) ->
-            return AccountService.getAccountInfo(TokenService.getId())
+          uc: (UserContextService) -> UserContextService.loadContext()
+          matches: (uc, MatchService) -> MatchService.get(uc.getId())
+        controller: ($scope, uc, matches) ->
+          $scope.matches = matches
+          #$scope.matchArray = (match for userId,match of matches)
+          $scope.search = {q: ''}
+
 
       $stateProvider.state 'likes',
         url: '/likes'

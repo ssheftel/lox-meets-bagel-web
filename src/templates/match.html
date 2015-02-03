@@ -1,3 +1,51 @@
+<div ui-content-for="title">
+  <span>Matches</span>
+</div>
+
+<div id="" class="scrollable">
+  <!--ng-if="Ui.active('searchBar')"-->
+  <input
+          type="search"
+          ng-model="search.q"
+          class="scroll-search-bar form-control scrollable-header input-lg"
+          placeholder="Search.." />
+
+  <div class="scrollable-content" ui-scroll-bottom='bottomReached()'>
+    <div class="list-group text-center">
+      <div ng-repeat="(userId, match) in matches | filterBy:['first_name', 'last_name', 'id']:search.q" class="list-group-item">
+        <div class="face-scroll-item-container">
+          <div class="lmb-info">
+            <div class="persons-name">{{ match.first_name }} {{match.last_name}}</div>
+            <div class="id-number">#{{match.id}}</div>
+            <div class="match-email"><a href="mailto:{{match.email}}">{{match.email}}</a></div>
+            <!--<span ng-hide="scroll.suggested_matches.indexOf(0 + person.id) == -1" class="subjected-match-star" style="font-size: 1.5em; display: inline-flex;"><i style="color:#FFD700;" class="fa fa-star"></i><small style="font-size: small;">suggested</br>match</small> </span>-->
+          </div>
+          <!--image-->
+          <div class="lmb-thumb-img-container">
+            <img class="lmb-thumb-img img-thumbnail" ng-src="{{::PhotoService.thumbnailUrl(match.photo_name)}}">
+          </div>
+          <!--button and actions-->
+          <div class="lmb-actions">
+            <div class="btn-group">
+              <!--<a ng-class="{'active': scroll.likes.indexOf(0 + person.id) != -1}" ng-click="scroll.likes.indexOf(0 + person.id) == -1 ? likePerson(person.id) : unlikePerson(person.id)" ng-show="scroll.likes.indexOf(0 + person.id) != -1" href class="btn btn-default"><i class="scroll-bottom-icon fa fa-thumbs-o-up fa-6"></i></a>-->
+              <!--<a  ng-click="likePerson(person.id)" ng-show="scroll.likes.indexOf(0 + person.id) == -1" href class="btn btn-default"><i class="scroll-bottom-icon fa fa-thumbs-o-up fa-6"></i></a>-->
+              <a href class=""><i class="scroll-bottom-icon fa fa-heart"></i></a>
+              <!--Heart -->
+            </div>
+            <!--Like Button-->
+          </div>
+          <!---->
+        </div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
 <div ui-content-for="navbarAction">
   <div class="btn" ng-click="logout()"><i class="fa fa-sign-out" ></i> Logout</div>
 </div>
