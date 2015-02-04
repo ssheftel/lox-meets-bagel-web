@@ -11,3 +11,12 @@
 - add user at the event
 - 8:30 turn on matching
 - hide partisipants tab till 8:30.
+
+
+#ORDER
+
+
+#DONE
+- fix button postioning
+- fix face detection
+- no matches yet indicator

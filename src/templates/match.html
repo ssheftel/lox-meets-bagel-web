@@ -12,12 +12,13 @@
 
   <div class="scrollable-content" ui-scroll-bottom='bottomReached()'>
     <div class="list-group text-center">
+      <div ng-hide="hasMatches" style="font-size: 23px;" class="list-group-item">no matches yet check back later</div>
       <div ng-repeat="(userId, match) in matches | filterBy:['first_name', 'last_name', 'id']:search.q" class="list-group-item">
         <div class="face-scroll-item-container">
           <div class="lmb-info">
             <div class="persons-name">{{ match.first_name }} {{match.last_name}}</div>
             <div class="id-number">#{{match.id}}</div>
-            <div class="match-email"><a href="mailto:{{match.email}}">{{match.email}}</a></div>
+            <div class="match-email"><a style="font-size: 17px;" href="mailto:{{match.email}}">{{match.email}}</a></div>
             <!--<span ng-hide="scroll.suggested_matches.indexOf(0 + person.id) == -1" class="subjected-match-star" style="font-size: 1.5em; display: inline-flex;"><i style="color:#FFD700;" class="fa fa-star"></i><small style="font-size: small;">suggested</br>match</small> </span>-->
           </div>
           <!--image-->

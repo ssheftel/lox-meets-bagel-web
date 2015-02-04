@@ -129,7 +129,7 @@ angular.module("LoxMeetsBagel", [
           matches: (uc, MatchService) -> MatchService.get(uc.getId())
         controller: ($scope, uc, matches) ->
           $scope.matches = matches
-          #$scope.matchArray = (match for userId,match of matches)
+          $scope.hasMatches = (k for own k of matches).length > 0
           $scope.search = {q: ''}
 
 
