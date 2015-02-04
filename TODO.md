@@ -20,3 +20,4 @@
 - fix button postioning
 - fix face detection
 - no matches yet indicator
+- fix refresh on upload

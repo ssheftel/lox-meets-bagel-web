@@ -8,13 +8,14 @@ angular.module('LoxMeetsBagel.controllers.Profile', [])
     return
   }
 )
-.controller( 'ProfileController', ($scope, uc, PhotoService, $state) ->
+.controller( 'ProfileController', ($scope, uc, PhotoService) ->
   $scope.photoService = PhotoService
+  $scope.photo_name = uc.get('photo_name')
   $scope.upload = () ->
     file = $scope.myFile
     if file
-      PhotoService.uploadPhoto(uc.get('id'), file)
-      #TODO RELOAD STATE
+      PhotoService.uploadPhoto(uc.get('id'), file).then ({has_photo, photo_name}) ->
+        $scope.photo_name = photo_name
 
   return
 
