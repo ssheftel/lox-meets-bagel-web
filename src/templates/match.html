@@ -12,8 +12,9 @@
 
   <div class="scrollable-content" ui-scroll-bottom='bottomReached()'>
     <div class="list-group text-center">
-      <div ng-hide="hasMatches" style="font-size: 23px;" class="list-group-item">no matches yet check back later</div>
-      <div ng-repeat="(userId, match) in matches | filterBy:['first_name', 'last_name', 'id']:search.q" class="list-group-item">
+      <div ng-if="!canShow" style="font-size: 23px;" class="list-group-item">matches won't be visible until after 8:30pm </div>
+      <div ng-if="canShow" ng-hide="hasMatches" style="font-size: 23px;" class="list-group-item">no matches yet check back later</div>
+      <div ng-if="canShow" ng-repeat="(userId, match) in matches | filterBy:['first_name', 'last_name', 'id']:search.q" class="list-group-item">
         <div class="face-scroll-item-container">
           <div class="lmb-info">
             <div class="persons-name">{{ match.first_name }} {{match.last_name}}</div>

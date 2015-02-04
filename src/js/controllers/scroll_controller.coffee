@@ -1,5 +1,6 @@
 angular.module('LoxMeetsBagel.controllers.Scroll', [])
-.controller( 'ScrollController', ($scope, $rootScope, uc, participants, LikeService) ->
+.controller( 'ScrollController', ($scope, $rootScope, APP_CONFIG, uc, participants, LikeService) ->
+  $scope.canShow = (Date.now() >= new Date(APP_CONFIG.startShowingMatches)) || uc.isAdmin()
   $scope.participants = participants
   $scope.scroll = {}
   $scope.scroll.q = ''

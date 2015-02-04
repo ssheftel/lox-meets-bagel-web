@@ -12,7 +12,8 @@
 
   <div class="scrollable-content" ui-scroll-bottom='bottomReached()'>
     <div class="list-group text-center">
-      <div ng-repeat="person in participants | filterBy:['first_name', 'last_name', 'id']:scroll.q" class="list-group-item">
+      <div ng-if="!canShow" style="font-size: 23px;" class="list-group-item">This feature will be enabled at 8:30pm</div>
+      <div ng-if="canShow" ng-repeat="person in participants | filterBy:['first_name', 'last_name', 'id']:scroll.q" class="list-group-item">
         <div class="face-scroll-item-container">
           <div class="lmb-info">
             <div class="persons-name">{{ person.first_name }} {{person.last_name}}</div>

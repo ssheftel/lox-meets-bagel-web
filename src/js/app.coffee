@@ -44,6 +44,9 @@ angular.module("LoxMeetsBagel", [
     photoUrl: 'http://res.cloudinary.com/lox-meets-bagel/image/upload/v1422675531/{{userId}}.jpg'
     thumbUrl: 'http://res.cloudinary.com/lox-meets-bagel/image/upload/h_130,w_130,c_limit/{{userId}}.jpg'
     defaultFace: 'default_face'
+    startShowingMatches: "Wed Feb 04 2015 20:30:00 GMT-0500 (EST)"
+
+
 )
 .config(
     #Add Auth Headers
@@ -127,7 +130,8 @@ angular.module("LoxMeetsBagel", [
         resolve:
           uc: (UserContextService) -> UserContextService.loadContext()
           matches: (uc, MatchService) -> MatchService.get(uc.getId())
-        controller: ($scope, uc, matches) ->
+        controller: ($scope, uc, matches, APP_CONFIG) ->
+          $scope.canShow = (Date.now() >= new Date(APP_CONFIG.startShowingMatches)) || uc.isAdmin()
           $scope.matches = matches
           $scope.hasMatches = (k for own k of matches).length > 0
           $scope.search = {q: ''}
