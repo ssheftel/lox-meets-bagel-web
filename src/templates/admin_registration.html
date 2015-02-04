@@ -1,10 +1,78 @@
-<div id="admin-app-config-container">
+<div id="admin-app-reg-config-container">
   <div ui-content-for="title">
     <span>New User Registration</span>
   </div>
   <!--Content-->
   <div class="scrollable">
     <div class="scrollable-content">
+      <div class="container-fluid section section-break">
+        <form role="form" ng-submit='create_user()'>
+          <fieldset>
+            <legend class="lmb-lg-legend">Add New User</legend>
+            <!--First name-->
+            <div class="form-group has-success has-feedback">
+              <label class="lmb-label">First Name</label>
+              <input type="text"
+                     required
+                     ng-model="first_name"
+                     class="form-control lmb-input"
+                     placeholder="First">
+            </div>
+            <!--Last Name-->
+            <div class="form-group">
+              <label class="lmb-label">Last Name</label>
+              <input type="text"
+                     required
+                     ng-model="last_name"
+                     class="form-control lmb-input"
+                     placeholder="Last">
+            </div>
+
+            <!--Email-->
+            <div class="form-group">
+              <label class="lmb-label">Email</label>
+              <input type="email"
+                     required
+                     ng-model="email"
+                     class="form-control lmb-input"
+                     placeholder="email">
+            </div>
+            <!--Gender-->
+            <div class="form-group">
+              <label class="lmb-label">Gender</label>
+              <div class="btn-group">
+                <a href class="btn btn-default" ng-class="{'active': gender == 'M'}" ng-click="gender='M'">Male</a>
+                <a href class="btn btn-default" ng-class="{'active': gender == 'F'}" ng-click="gender='F'">Female</a>
+              </div>
+            </div>
+
+
+          </fieldset>
+          <hr>
+
+          <button class="btn btn-primary btn-block lmb-lg-button" ng-class="{'disabled': !validate()}">
+            Create User
+          </button>
+
+        </form>
+        <span ng-show="last_user_created">
+          <hr>
+            <h3>Last User created</h3>
+            <dl class="dl-horizontal">
+              <dt>First Name</dt>
+              <dd>{{last_user_created.first_name}}</dd>
+              <dt>Last Name</dt>
+              <dd>{{last_user_created.last_name}}</dd>
+              <dt>ID Number</dt>
+              <dd>{{last_user_created.id}}</dd>
+              <dt>Email</dt>
+              <dd>{{last_user_created.email}}</dd>
+              <dt>Password</dt>
+              <dd>{{last_user_created.password}}</dd>
+            </dl>
+        </span>
+      </div>
+
 
 
 

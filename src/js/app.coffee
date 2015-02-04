@@ -170,6 +170,8 @@ angular.module("LoxMeetsBagel", [
         url: '/admin_registration'
         templateUrl: 'admin_registration.html'
         controller: 'AdminRegistration'
+        resolve:
+          uc: (UserContextService) -> UserContextService.promise
 
       $stateProvider.state 'admin.user_search',
         url: '/user_search',

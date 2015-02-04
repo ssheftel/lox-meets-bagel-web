@@ -7,7 +7,7 @@
 
 #TO ADD
 - ability register indiviguals and send invite email, and spesify number/get number
-- add user at the event
+- add user at the event ✓
 - send invite at 6:00 to all on wendsday
 - 8:30 turn on matching ✓
 - hide partisipants tab till 8:30. ✓
@@ -24,3 +24,5 @@
 - ----------------------------
 - 8:30 turn on matching. (kind of)
 - hide partisipants tab till 8:30. (kind of)
+- -----------------------------
+- add user at the event
