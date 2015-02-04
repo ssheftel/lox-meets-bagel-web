@@ -42,7 +42,7 @@ angular.module("LoxMeetsBagel", [
     uploadPhoto: '/api/v1.0/user/{{userId}}/photo'
     likeSomeone: '/api/v1.0/user/{{userId}}/like/{{likeUserId}}'
     photoUrl: 'http://res.cloudinary.com/lox-meets-bagel/image/upload/v1422675531/{{userId}}.jpg'
-    thumbUrl: 'http://res.cloudinary.com/lox-meets-bagel/image/upload/h_130,c_scale,c_thumb,g_face/{{userId}}.jpg'
+    thumbUrl: 'http://res.cloudinary.com/lox-meets-bagel/image/upload/h_130,w_130,c_limit/{{userId}}.jpg'
     defaultFace: 'default_face'
 )
 .config(

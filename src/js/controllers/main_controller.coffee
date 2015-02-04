@@ -10,7 +10,7 @@ controller "MainController", ($scope, $state, $rootScope, UserContextService, Ph
     $rootScope.loading = true
     return
 
-  $rootScope.$on 'stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->
+  $rootScope.$on '$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->
     $rootScope.loading = false
     return
 
