@@ -45,6 +45,9 @@ angular.module("LoxMeetsBagel", [
     thumbUrl: 'http://res.cloudinary.com/lox-meets-bagel/image/upload/h_130,w_130,c_limit/{{userId}}.jpg'
     defaultFace: 'default_face'
     startShowingMatches: "Wed Feb 04 2015 20:30:00 GMT-0500 (EST)"
+    makeSuggestedMatches: '/api/v1.0/admin/data_setup/suggested_matches'
+    adminAllUsers: '/api/v1.0/admin/all_users'
+    resendInviteEmail: '/api/v1.0/user/reissue'
 
 
 )
@@ -177,6 +180,12 @@ angular.module("LoxMeetsBagel", [
         url: '/user_search',
         templateUrl: 'admin_user_search.html'
         controller: 'AdminUserSearch'
+        resolve:
+          uc: (UserContextService) -> UserContextService.promise
+          allUsers: ($http, APP_CONFIG, uc) ->
+            $http.get(APP_CONFIG.adminAllUsers).then (resp) -> resp.data
+
+
 
       return
 )

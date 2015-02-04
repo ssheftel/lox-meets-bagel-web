@@ -26,3 +26,6 @@
 - hide partisipants tab till 8:30. (kind of)
 - -----------------------------
 - add user at the event
+-  ---------------------------
+
+- searching all users

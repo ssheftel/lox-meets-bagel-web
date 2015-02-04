@@ -4,7 +4,53 @@
   </div>
   <!--Content-->
   <div class="scrollable">
-    <div class="scrollable-content"></div>
+    <input
+            type="search"
+            ng-model="search.q"
+            class="scroll-search-bar form-control scrollable-header input-lg"
+            placeholder="Search.." />
+    <div class="scrollable-content" ui-scroll-bottom='bottomReached()'>
+      <div class="list-group">
+        <div class="list-group-item" ng-repeat="person in allUsers| filterBy:['first_name', 'last_name', 'email', 'id']:search.q">
+          <!---->
+          <dl class="dl-horizontal">
+            <dt>Name</dt>
+            <dd>{{person.first_name}} {{person.last_name}}</dd>
+            <!---->
+            <dt>ID</dt>
+            <dd>{{person.id}}</dd>
+            <!---->
+            <dt>Email</dt>
+            <dd>{{person.email}}</dd>
+            <!---->
+            <dt>Password</dt>
+            <dd>{{person.password}}</dd>
+            <!---->
+            <dt>Gender</dt>
+            <dd>{{person.gender}}</dd>
+            <!---->
+            <dt>Has Sent Invite Email</dt>
+            <dd>{{person.sent_login_email}}</dd>
+            <!---->
+            <dt>People Liked</dt>
+            <dd>{{person.likes}}</dd>
+            <!---->
+            <dt>Suggested Matches</dt>
+            <dd>{{person.suggested_matches}}</dd>
+            <!---->
+            <dt>Has Uploaded a Photo</dt>
+            <dd>{{person.has_photo}}</dd>
+            <!---->
+            <dt>Is Admin</dt>
+            <dd>{{person.admin}}</dd>
+          </dl>
+          <button ng-click="resendInvite(person.email)">Resend Invite Email</button>
+        </div>
+
+
+      </div>
+    </div>
+
   </div>
 
 </div>
