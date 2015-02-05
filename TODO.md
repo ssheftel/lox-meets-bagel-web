@@ -29,3 +29,10 @@
 -  ---------------------------
 
 - searching all users
+
+
+-------------------
+
+- add note about site going down in 10 day
+- fix email queue
+- disbles unlikes
